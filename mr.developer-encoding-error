@@ -5,8 +5,8 @@ _PY_VERSION=python3.2
 _TMP_DIR=/tmp
 # path to virtualenv
 _VENV=virtualenv
-_REPO=https://github.com/jajadinimueter/mr.developer.git
-_BRANCH=test_setup
+_REPO=https://github.com/fschulze/mr.developer.git
+_BRANCH=master
 
 _lang=$LANG
 _language=$LANGUAGE
