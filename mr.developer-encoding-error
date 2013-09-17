@@ -5,6 +5,8 @@ _PY_VERSION=python3.2
 _TMP_DIR=/tmp
 # path to virtualenv
 _VENV=virtualenv
+_REPO=https://github.com/jajadinimueter/mr.developer.git
+_BRANCH=test_setup
 
 _lang=$LANG
 _language=$LANGUAGE
@@ -31,11 +33,13 @@ export LANG LANGUAGE LC_CTYPE LC_COLLATE LC_TIME LC_NUMERIC LC_MONETARY LC_MESSA
 pushd $_TMP_DIR 
 
 _tmpfile=$(mktemp -d mr.dev-encoding-test.XXXXXXXXXX)
-
-git clone https://github.com/fschulze/mr.developer.git $_tmpfile
+pushd $_tmpfile
+git clone $_REPO
 pushd mr.developer
+git checkout $_BRANCH
 
 $_VENV -p $_PY_VERSION venv
+./venv/bin/python setup.py sdist
 ./venv/bin/python setup.py install
 
 LANG=$_lang
@@ -50,6 +54,7 @@ LC_ALL=$_lc_all
 
 export LANG LANGUAGE LC_CTYPE LC_COLLATE LC_TIME LC_NUMERIC LC_MONETARY LC_MESSAGES
 
+popd
 popd
 
 rm -rf "$_tmpfile"
