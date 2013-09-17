@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# python executable passed to virtualenv
+_PY_VERSION=python3.2
+_TMP_DIR=/tmp
+# path to virtualenv
+_VENV=virtualenv
+
+_lang=$LANG
+_language=$LANGUAGE
+_lc_ctype=$LC_CTYPE
+_lc_collate=$LC_COLLATE
+_lc_time=$LC_TIME
+_lc_numeric=$LC_NUMERIC
+_lc_monetary=$LC_MONETARY
+_lc_messages=$LC_MESSAGES
+_lc_all=$LC_ALL
+
+LANG=
+LANGUAGE=
+LC_CTYPE="C"
+LC_COLLATE="C"
+LC_TIME="C"
+LC_NUMERIC="C"
+LC_MONETARY="C"
+LC_MESSAGES="C"
+LC_ALL=
+
+export LANG LANGUAGE LC_CTYPE LC_COLLATE LC_TIME LC_NUMERIC LC_MONETARY LC_MESSAGES
+
+pushd $_TMP_DIR 
+
+_tmpfile=$(mktemp -d mr.dev-encoding-test.XXXXXXXXXX)
+
+git clone https://github.com/fschulze/mr.developer.git $_tmpfile
+pushd mr.developer
+
+$_VENV -p $_PY_VERSION venv
+./venv/bin/python setup.py install
+
+LANG=$_lang
+LANGUAGE=$_language
+LC_CTYPE=$_lc_ctype
+LC_COLLATE=$_lc_collate
+LC_TIME=$_lc_time
+LC_NUMERIC=$_lc_numeric
+LC_MONETARY=$_lc_monetary
+LC_MESSAGES=$_lc_messages
+LC_ALL=$_lc_all
+
+export LANG LANGUAGE LC_CTYPE LC_COLLATE LC_TIME LC_NUMERIC LC_MONETARY LC_MESSAGES
+
+popd
+
+rm -rf "$_tmpfile"
+
+popd
+
